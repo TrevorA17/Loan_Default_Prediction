@@ -99,3 +99,30 @@ anova_result <- aov(int.rate ~ purpose, data = loan_data)
 
 # Summary of ANOVA results
 summary(anova_result)
+
+# Univariate Plots
+# Histograms for numerical variables
+num_vars <- c("int.rate", "installment", "log.annual.inc", "dti", "fico", 
+              "days.with.cr.line", "revol.bal", "revol.util", 
+              "inq.last.6mths", "delinq.2yrs", "pub.rec")
+
+for (var in num_vars) {
+  p <- ggplot(loan_data, aes(x = loan_data[[var]])) +
+    geom_histogram(fill = "skyblue", color = "black", bins = 30) +
+    labs(title = paste("Histogram of", var), x = var, y = "Frequency") +
+    theme_minimal()
+  
+  print(p)
+}
+
+# Bar plots for categorical variables
+cat_vars <- c("credit.policy", "purpose", "not.fully.paid")
+
+for (var in cat_vars) {
+  p <- ggplot(loan_data, aes(x = loan_data[[var]])) +
+    geom_bar(fill = "skyblue", color = "black") +
+    labs(title = paste("Bar Plot of", var), x = var, y = "Frequency") +
+    theme_minimal()
+  
+  print(p)
+}
