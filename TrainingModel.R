@@ -72,3 +72,14 @@ model <- train(not.fully.paid ~ .,         # Predict 'not.fully.paid' based on a
 
 # Display the model
 print(model)
+
+# Train gradient boosting model
+set.seed(123)  # Set seed for reproducibility
+gbm_model <- train(not.fully.paid ~ .,         # Predict 'not.fully.paid' based on all other variables
+                   data = loan_data,           # Training data
+                   method = "gbm",            # Use Gradient Boosting Machine
+                   trControl = ctrl,          # Use defined control parameters
+                   verbose = FALSE)           # Suppress verbose output
+
+# Display the gradient boosting model
+print(gbm_model)
