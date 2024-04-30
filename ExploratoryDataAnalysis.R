@@ -126,3 +126,42 @@ for (var in cat_vars) {
   
   print(p)
 }
+
+# Load necessary libraries
+library(ggplot2)
+
+# Multivariate Plots
+# Scatter plots for pairs of numerical variables
+num_vars <- c("int.rate", "installment", "log.annual.inc", "dti", "fico", 
+              "days.with.cr.line", "revol.bal", "revol.util", 
+              "inq.last.6mths", "delinq.2yrs", "pub.rec")
+
+num_plots <- combn(num_vars, 2, simplify = FALSE)
+
+scatter_plots <- lapply(num_plots, function(vars) {
+  p <- ggplot(loan_data, aes(x = .data[[vars[1]]], y = .data[[vars[2]]])) +
+    geom_point(color = "skyblue") +
+    labs(title = paste("Scatter Plot of", vars[1], "vs", vars[2]),
+         x = vars[1], y = vars[2]) +
+    theme_minimal()
+  
+  return(p)
+})
+
+# Grouped bar plots for pairs of categorical variables
+cat_vars <- c("credit.policy", "purpose", "not.fully.paid")
+
+cat_plots <- lapply(cat_vars, function(cat_var) {
+  p <- ggplot(loan_data, aes(x = .data[[cat_var]], fill = .data[[cat_vars[1]]])) +
+    geom_bar(position = "dodge") +
+    labs(title = paste("Grouped Bar Plot of", cat_var, "vs", cat_vars[1]),
+         x = cat_var, y = "Frequency") +
+    theme_minimal() +
+    facet_grid(~ cat_vars[2], scales = "free_y")
+  
+  return(p)
+})
+
+# Output results
+print(scatter_plots)
+print(cat_plots)
