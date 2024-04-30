@@ -82,3 +82,14 @@ distribution_measures <- sapply(loan_data[num_vars], function(x) {
 
 # Output results
 distribution_measures
+
+# Define numerical variables
+num_vars <- c("int.rate", "installment", "log.annual.inc", "dti", "fico", 
+              "days.with.cr.line", "revol.bal", "revol.util", 
+              "inq.last.6mths", "delinq.2yrs", "pub.rec")
+
+# Calculate correlation matrix
+correlation_matrix <- cor(loan_data[num_vars], use = "pairwise.complete.obs")
+
+# Output results
+correlation_matrix
