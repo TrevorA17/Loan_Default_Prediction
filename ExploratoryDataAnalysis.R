@@ -93,3 +93,9 @@ correlation_matrix <- cor(loan_data[num_vars], use = "pairwise.complete.obs")
 
 # Output results
 correlation_matrix
+
+# Perform ANOVA
+anova_result <- aov(int.rate ~ purpose, data = loan_data)
+
+# Summary of ANOVA results
+summary(anova_result)
