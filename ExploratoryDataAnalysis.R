@@ -24,3 +24,42 @@ head(loan_data)
 
 #View the dataset
 View(loan_data)
+
+# Measures of Frequency for Categorical Variables
+cat_vars <- c("credit.policy", "purpose", "not.fully.paid")
+
+cat_freq_summary <- lapply(cat_vars, function(var) {
+  cat_freq <- table(loan_data[[var]])
+  cat_freq_percentage <- prop.table(cat_freq) * 100
+  cat_freq_summary <- data.frame(Frequency = cat_freq, Percentage = cat_freq_percentage)
+  cat_freq_summary <- cat_freq_summary[order(-cat_freq), ]
+  cat_freq_summary$Percentage <- paste0(format(cat_freq_summary$Percentage, digits = 2), "%")
+  cat_freq_summary$Category <- factor(row.names(cat_freq_summary))
+  
+  return(cat_freq_summary)
+})
+
+names(cat_freq_summary) <- cat_vars
+
+# Output results
+cat_freq_summary
+
+# Define numerical variables
+num_vars <- c("int.rate", "installment", "log.annual.inc", "dti", "fico", 
+              "days.with.cr.line", "revol.bal", "revol.util", 
+              "inq.last.6mths", "delinq.2yrs", "pub.rec")
+
+# Calculate measures of central tendency
+central_tendency <- sapply(loan_data[num_vars], function(x) {
+  mean_val <- mean(x, na.rm = TRUE)
+  median_val <- median(x, na.rm = TRUE)
+  mode_val <- as.numeric(names(sort(table(x), decreasing = TRUE)[1]))
+  
+  return(c(Mean = mean_val, Median = median_val, Mode = mode_val))
+})
+
+# Add variable names
+rownames(central_tendency) <- c("Mean", "Median", "Mode")
+
+# Output results
+central_tendency
