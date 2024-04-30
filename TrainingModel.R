@@ -42,3 +42,17 @@ test_data <- loan_data[-train_index, ]
 # Display the dimensions of the training and testing sets
 cat("Training set size:", nrow(train_data), "\n")
 cat("Testing set size:", nrow(test_data), "\n")
+
+library(boot)
+# Define a function to compute the statistic of interest
+# For example, let's calculate the mean of the 'int.rate' variable
+mean_statistic <- function(data, indices) {
+  return(mean(data[indices, "int.rate"], na.rm = TRUE))
+}
+
+# Perform bootstrapping
+set.seed(123)  # Set seed for reproducibility
+boot_result <- boot(data = loan_data, statistic = mean_statistic, R = 1000)
+
+# Display the bootstrap results
+print(boot_result)
