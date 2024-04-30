@@ -63,3 +63,22 @@ rownames(central_tendency) <- c("Mean", "Median", "Mode")
 
 # Output results
 central_tendency
+
+# Define numerical variables
+num_vars <- c("int.rate", "installment", "log.annual.inc", "dti", "fico", 
+              "days.with.cr.line", "revol.bal", "revol.util", 
+              "inq.last.6mths", "delinq.2yrs", "pub.rec")
+
+# Calculate measures of distribution
+distribution_measures <- sapply(loan_data[num_vars], function(x) {
+  range_val <- range(x, na.rm = TRUE)
+  variance_val <- var(x, na.rm = TRUE)
+  sd_val <- sd(x, na.rm = TRUE)
+  
+  return(c(Range = paste(range_val, collapse = " - "), 
+           Variance = variance_val, 
+           SD = sd_val))
+})
+
+# Output results
+distribution_measures
