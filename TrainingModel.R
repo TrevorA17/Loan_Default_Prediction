@@ -56,3 +56,19 @@ boot_result <- boot(data = loan_data, statistic = mean_statistic, R = 1000)
 
 # Display the bootstrap results
 print(boot_result)
+
+# Define control parameters for repeated k-fold cross-validation
+ctrl <- trainControl(method = "repeatedcv",  # Use repeated k-fold cross-validation
+                     number = 10,            # Number of folds
+                     repeats = 3,            # Number of repeats
+                     verboseIter = TRUE)     # Show iteration progress
+
+# Train a classification model using repeated k-fold cross-validation
+set.seed(123)  # Set seed for reproducibility
+model <- train(not.fully.paid ~ .,         # Predict 'not.fully.paid' based on all other variables
+               data = loan_data,           # Training data
+               method = "glm",             # Use Generalized Linear Model (logistic regression)
+               trControl = ctrl)           # Use defined control parameters
+
+# Display the model
+print(model)
