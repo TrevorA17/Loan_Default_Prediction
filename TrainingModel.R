@@ -85,7 +85,7 @@ gbm_model <- train(not.fully.paid ~ .,         # Predict 'not.fully.paid' based 
 print(gbm_model)
 
 # Train neural network model
-set.seed(123)  # Set seed for reproducibility
+set.seed(123)  # Set seesd for reproducibility
 nnet_model <- train(not.fully.paid ~ .,       # Predict 'not.fully.paid' based on all other variables
                     data = loan_data,         # Training data
                     method = "nnet",          # Use Neural Networks
@@ -93,3 +93,16 @@ nnet_model <- train(not.fully.paid ~ .,       # Predict 'not.fully.paid' based o
 
 # Display the neural network model
 print(nnet_model)
+
+# Define models
+models <- list(
+  "Logistic Regression" = caret::train(not.fully.paid ~ ., data = loan_data, method = "glm", trControl = ctrl),
+  "Gradient Boosting" = caret::train(not.fully.paid ~ ., data = loan_data, method = "gbm", trControl = ctrl, verbose = FALSE),
+  "Neural Network" = caret::train(not.fully.paid ~ ., data = loan_data, method = "nnet", trControl = ctrl)
+)
+
+# Compare model performance using resamples
+model_resamples <- resamples(models)
+
+# Summarize model performance
+summary(model_resamples)
