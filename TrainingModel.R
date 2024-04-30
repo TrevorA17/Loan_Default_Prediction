@@ -83,3 +83,13 @@ gbm_model <- train(not.fully.paid ~ .,         # Predict 'not.fully.paid' based 
 
 # Display the gradient boosting model
 print(gbm_model)
+
+# Train neural network model
+set.seed(123)  # Set seed for reproducibility
+nnet_model <- train(not.fully.paid ~ .,       # Predict 'not.fully.paid' based on all other variables
+                    data = loan_data,         # Training data
+                    method = "nnet",          # Use Neural Networks
+                    trControl = ctrl)        # Use defined control parameters
+
+# Display the neural network model
+print(nnet_model)
