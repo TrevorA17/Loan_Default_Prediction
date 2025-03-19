@@ -1,0 +1,370 @@
+---
+title: "Loan Default Application Prediction"
+author: "Trevor Okinda"
+date: "2024"
+output:
+  github_document: 
+    toc: yes
+    toc_depth: 4
+    fig_width: 6
+    fig_height: 4
+    df_print: default
+editor_options:
+  chunk_output_type: console
+---
+
+# Student Details
+
+|                                              |     |
+|----------------------------------------------|-----|
+| **Student ID Number**                        | 134780 |
+| **Student Name**                             | Trevor Okinda |
+| **BBIT 4.2 Group**                           | C |
+| **Project Name**                             | Loan Default Prediction |
+
+# Setup Chunk
+
+**Note:** the following KnitR options have been set as the global defaults: <BR> `knitr::opts_chunk$set(echo = TRUE, warning = FALSE, eval = TRUE, collapse = FALSE, tidy = TRUE)`.
+
+More KnitR options are documented here <https://bookdown.org/yihui/rmarkdown-cookbook/chunk-options.html> and here <https://yihui.org/knitr/options/>.
+
+```{r setup, include=FALSE}
+library(formatR)
+knitr::opts_chunk$set(
+  warning = FALSE,
+  collapse = FALSE
+)
+```
+
+# Understanding the Dataset (Exploratory Data Analysis (EDA))
+
+## Loading the Dataset
+
+### Source: 
+
+The dataset that was used can be downloaded here: *\<https://www.kaggle.com/datasets/urstrulyvikas/lending-club-loan-data-analysis/data\>*
+
+### Reference:
+
+*\<Chellaboina, V. (2020). Lending Club Loan Data Analysis [Data set]. Kaggle. https://www.kaggle.com/datasets/urstrulyvikas/lending-club-loan-data-analysis/datas\>\
+
+Refer to the APA 7th edition manual for rules on how to cite datasets: <https://apastyle.apa.org/style-grammar-guidelines/references/examples/data-set-references>*
+
+# Exploratory Data Analysis
+## Load dataset
+```{r}
+# Load the loan dataset
+loan_data <-read.csv("loan_data.csv" , colClasses = c(
+  credit.policy = "factor",
+  purpose = "factor",
+  int.rate = "numeric",
+  installment = "numeric",
+  log.annual.inc = "numeric",
+  dti = "numeric",
+  fico = "numeric",
+  days.with.cr.line = "numeric",
+  revol.bal = "numeric",
+  revol.util = "numeric",
+  inq.last.6mths = "numeric",
+  delinq.2yrs = "numeric",
+  pub.rec = "numeric",
+  not.fully.paid = "factor"
+), header = TRUE)
+
+# Display the structure of the dataset
+str(loan_data)
+
+# View the first few rows of the dataset
+head(loan_data)
+
+#View the dataset
+View(loan_data)
+```
+
+## Measures of Frequeuncy
+```{r}
+# Measures of Frequency for Categorical Variables
+cat_vars <- c("credit.policy", "purpose", "not.fully.paid")
+
+cat_freq_summary <- lapply(cat_vars, function(var) {
+  cat_freq <- table(loan_data[[var]])
+  cat_freq_percentage <- prop.table(cat_freq) * 100
+  cat_freq_summary <- data.frame(Frequency = cat_freq, Percentage = cat_freq_percentage)
+  cat_freq_summary <- cat_freq_summary[order(-cat_freq), ]
+  cat_freq_summary$Percentage <- paste0(format(cat_freq_summary$Percentage, digits = 2), "%")
+  cat_freq_summary$Category <- factor(row.names(cat_freq_summary))
+  
+  return(cat_freq_summary)
+})
+
+names(cat_freq_summary) <- cat_vars
+
+# Output results
+cat_freq_summary
+```
+
+## Measures of Central Tendency
+```{r}
+# Define numerical variables
+num_vars <- c("int.rate", "installment", "log.annual.inc", "dti", "fico", 
+              "days.with.cr.line", "revol.bal", "revol.util", 
+              "inq.last.6mths", "delinq.2yrs", "pub.rec")
+
+# Calculate measures of central tendency
+central_tendency <- sapply(loan_data[num_vars], function(x) {
+  mean_val <- mean(x, na.rm = TRUE)
+  median_val <- median(x, na.rm = TRUE)
+  mode_val <- as.numeric(names(sort(table(x), decreasing = TRUE)[1]))
+  
+  return(c(Mean = mean_val, Median = median_val, Mode = mode_val))
+})
+
+# Add variable names
+rownames(central_tendency) <- c("Mean", "Median", "Mode")
+
+# Output results
+central_tendency
+```
+
+## Measures of Distribution
+```{r}
+# Define numerical variables
+num_vars <- c("int.rate", "installment", "log.annual.inc", "dti", "fico", 
+              "days.with.cr.line", "revol.bal", "revol.util", 
+              "inq.last.6mths", "delinq.2yrs", "pub.rec")
+
+# Calculate measures of distribution
+distribution_measures <- sapply(loan_data[num_vars], function(x) {
+  range_val <- range(x, na.rm = TRUE)
+  variance_val <- var(x, na.rm = TRUE)
+  sd_val <- sd(x, na.rm = TRUE)
+  
+  return(c(Range = paste(range_val, collapse = " - "), 
+           Variance = variance_val, 
+           SD = sd_val))
+})
+
+# Output results
+distribution_measures
+```
+
+## Measures of Relationship
+```{r}
+# Define numerical variables
+num_vars <- c("int.rate", "installment", "log.annual.inc", "dti", "fico", 
+              "days.with.cr.line", "revol.bal", "revol.util", 
+              "inq.last.6mths", "delinq.2yrs", "pub.rec")
+
+# Calculate correlation matrix
+correlation_matrix <- cor(loan_data[num_vars], use = "pairwise.complete.obs")
+
+# Output results
+correlation_matrix
+```
+
+## ANOVA
+```{r}
+# Perform ANOVA
+anova_result <- aov(int.rate ~ purpose, data = loan_data)
+
+# Summary of ANOVA results
+summary(anova_result)
+```
+
+## Plots
+```{r}
+
+# Load necessary libraries
+library(ggplot2)
+# Univariate Plots
+# Histograms for numerical variables
+num_vars <- c("int.rate", "installment", "log.annual.inc", "dti", "fico", 
+              "days.with.cr.line", "revol.bal", "revol.util", 
+              "inq.last.6mths", "delinq.2yrs", "pub.rec")
+
+for (var in num_vars) {
+  p <- ggplot(loan_data, aes(x = loan_data[[var]])) +
+    geom_histogram(fill = "skyblue", color = "black", bins = 30) +
+    labs(title = paste("Histogram of", var), x = var, y = "Frequency") +
+    theme_minimal()
+  
+  print(p)
+}
+
+# Bar plots for categorical variables
+cat_vars <- c("credit.policy", "purpose", "not.fully.paid")
+
+for (var in cat_vars) {
+  p <- ggplot(loan_data, aes(x = loan_data[[var]])) +
+    geom_bar(fill = "skyblue", color = "black") +
+    labs(title = paste("Bar Plot of", var), x = var, y = "Frequency") +
+    theme_minimal()
+  
+  print(p)
+}
+
+
+# Multivariate Plots
+# Scatter plots for pairs of numerical variables
+num_vars <- c("int.rate", "installment", "log.annual.inc", "dti", "fico", 
+              "days.with.cr.line", "revol.bal", "revol.util", 
+              "inq.last.6mths", "delinq.2yrs", "pub.rec")
+
+num_plots <- combn(num_vars, 2, simplify = FALSE)
+
+scatter_plots <- lapply(num_plots, function(vars) {
+  p <- ggplot(loan_data, aes(x = .data[[vars[1]]], y = .data[[vars[2]]])) +
+    geom_point(color = "skyblue") +
+    labs(title = paste("Scatter Plot of", vars[1], "vs", vars[2]),
+         x = vars[1], y = vars[2]) +
+    theme_minimal()
+  
+  return(p)
+})
+
+# Grouped bar plots for pairs of categorical variables
+cat_vars <- c("credit.policy", "purpose", "not.fully.paid")
+
+cat_plots <- lapply(cat_vars, function(cat_var) {
+  p <- ggplot(loan_data, aes(x = .data[[cat_var]], fill = .data[[cat_vars[1]]])) +
+    geom_bar(position = "dodge") +
+    labs(title = paste("Grouped Bar Plot of", cat_var, "vs", cat_vars[1]),
+         x = cat_var, y = "Frequency") +
+    theme_minimal() +
+    facet_grid(~ cat_vars[2], scales = "free_y")
+  
+  return(p)
+})
+
+# Output results
+print(scatter_plots)
+print(cat_plots)
+```
+
+# Preprocessing and Data Transformation
+## Missing Values
+```{r}
+# Check for missing values
+missing_values <- colSums(is.na(loan_data))
+
+# Display the presence of missing values
+print(missing_values)
+```
+
+## Transformation
+```{r}
+# Convert categorical variables to factors
+loan_data$credit.policy <- as.factor(loan_data$credit.policy)
+loan_data$purpose <- as.factor(loan_data$purpose)
+loan_data$not.fully.paid <- as.factor(loan_data$not.fully.paid)
+
+# Apply label encoding
+loan_data$credit.policy <- as.numeric(loan_data$credit.policy)
+loan_data$purpose <- as.numeric(loan_data$purpose)
+loan_data$not.fully.paid <- as.numeric(loan_data$not.fully.paid)
+
+# Display the transformed dataset
+head(loan_data)
+```
+
+# Training Model
+## Data Splitting
+```{r}
+# Load necessary libraries
+library(caret)
+
+# Convert categorical variables to factors
+loan_data$credit.policy <- as.factor(loan_data$credit.policy)
+loan_data$purpose <- as.factor(loan_data$purpose)
+loan_data$not.fully.paid <- as.factor(loan_data$not.fully.paid)
+
+# Split the dataset into training and testing sets
+set.seed(123)  # Set seed for reproducibility
+train_index <- createDataPartition(loan_data$not.fully.paid, p = 0.7, list = FALSE)
+train_data <- loan_data[train_index, ]
+test_data <- loan_data[-train_index, ]
+
+# Display the dimensions of the training and testing sets
+cat("Training set size:", nrow(train_data), "\n")
+cat("Testing set size:", nrow(test_data), "\n")
+```
+
+## Bootstrapping
+```{r}
+library(boot)
+# Define a function to compute the statistic of interest
+# For example, let's calculate the mean of the 'int.rate' variable
+mean_statistic <- function(data, indices) {
+  return(mean(data[indices, "int.rate"], na.rm = TRUE))
+}
+
+# Perform bootstrapping
+set.seed(123)  # Set seed for reproducibility
+boot_result <- boot(data = loan_data, statistic = mean_statistic, R = 1000)
+
+# Display the bootstrap results
+print(boot_result)
+```
+
+## Cross-validation
+```{r}
+# Define control parameters for repeated k-fold cross-validation
+ctrl <- trainControl(method = "repeatedcv",  # Use repeated k-fold cross-validation
+                     number = 10,            # Number of folds
+                     repeats = 3,            # Number of repeats
+                     verboseIter = TRUE)     # Show iteration progress
+
+# Train a classification model using repeated k-fold cross-validation
+set.seed(123)  # Set seed for reproducibility
+model <- train(not.fully.paid ~ .,         # Predict 'not.fully.paid' based on all other variables
+               data = loan_data,           # Training data
+               method = "glm",             # Use Generalized Linear Model (logistic regression)
+               trControl = ctrl)           # Use defined control parameters
+
+# Display the model
+print(model)
+```
+
+## Train other models
+```{r}
+# Train gradient boosting model
+set.seed(123)  # Set seed for reproducibility
+gbm_model <- train(not.fully.paid ~ .,         # Predict 'not.fully.paid' based on all other variables
+                   data = loan_data,           # Training data
+                   method = "gbm",            # Use Gradient Boosting Machine
+                   trControl = ctrl,          # Use defined control parameters
+                   verbose = FALSE)           # Suppress verbose output
+
+# Display the gradient boosting model
+print(gbm_model)
+
+# Train neural network model
+set.seed(123)  # Set seesd for reproducibility
+nnet_model <- train(not.fully.paid ~ .,       # Predict 'not.fully.paid' based on all other variables
+                    data = loan_data,         # Training data
+                    method = "nnet",          # Use Neural Networks
+                    trControl = ctrl)        # Use defined control parameters
+
+# Display the neural network model
+print(nnet_model)
+```
+
+## Model performance 
+```{r}
+# Define models
+models <- list(
+  "Logistic Regression" = caret::train(not.fully.paid ~ ., data = loan_data, method = "glm", trControl = ctrl),
+  "Gradient Boosting" = caret::train(not.fully.paid ~ ., data = loan_data, method = "gbm", trControl = ctrl, verbose = FALSE),
+  "Neural Network" = caret::train(not.fully.paid ~ ., data = loan_data, method = "nnet", trControl = ctrl)
+)
+
+# Compare model performance using resamples
+model_resamples <- resamples(models)
+
+# Summarize model performance
+summary(model_resamples)
+
+```
+
+
+
