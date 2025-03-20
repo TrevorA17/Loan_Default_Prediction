@@ -52,7 +52,7 @@ Refer to the APA 7th edition manual for rules on how to cite datasets: <https://
 
 # Exploratory Data Analysis
 ## Load dataset
-```{r}
+```{r load dataset}
 # Load the loan dataset
 loan_data <-read.csv("loan_data.csv" , colClasses = c(
   credit.policy = "factor",
@@ -82,7 +82,7 @@ View(loan_data)
 ```
 
 ## Measures of Frequeuncy
-```{r}
+```{r measures of frequency}
 # Measures of Frequency for Categorical Variables
 cat_vars <- c("credit.policy", "purpose", "not.fully.paid")
 
@@ -104,7 +104,7 @@ cat_freq_summary
 ```
 
 ## Measures of Central Tendency
-```{r}
+```{r measures of central tendency}
 # Define numerical variables
 num_vars <- c("int.rate", "installment", "log.annual.inc", "dti", "fico", 
               "days.with.cr.line", "revol.bal", "revol.util", 
@@ -127,7 +127,7 @@ central_tendency
 ```
 
 ## Measures of Distribution
-```{r}
+```{r measures of distribution}
 # Define numerical variables
 num_vars <- c("int.rate", "installment", "log.annual.inc", "dti", "fico", 
               "days.with.cr.line", "revol.bal", "revol.util", 
@@ -149,7 +149,7 @@ distribution_measures
 ```
 
 ## Measures of Relationship
-```{r}
+```{r measures of relationship}
 # Define numerical variables
 num_vars <- c("int.rate", "installment", "log.annual.inc", "dti", "fico", 
               "days.with.cr.line", "revol.bal", "revol.util", 
@@ -172,7 +172,7 @@ summary(anova_result)
 ```
 
 ## Plots
-```{r}
+```{r plots}
 
 # Load necessary libraries
 library(ggplot2)
@@ -243,7 +243,7 @@ print(cat_plots)
 
 # Preprocessing and Data Transformation
 ## Missing Values
-```{r}
+```{r missing values}
 # Check for missing values
 missing_values <- colSums(is.na(loan_data))
 
@@ -252,7 +252,7 @@ print(missing_values)
 ```
 
 ## Transformation
-```{r}
+```{r transformation}
 # Convert categorical variables to factors
 loan_data$credit.policy <- as.factor(loan_data$credit.policy)
 loan_data$purpose <- as.factor(loan_data$purpose)
@@ -269,7 +269,7 @@ head(loan_data)
 
 # Training Model
 ## Data Splitting
-```{r}
+```{r data splitting}
 # Load necessary libraries
 library(caret)
 
@@ -290,7 +290,7 @@ cat("Testing set size:", nrow(test_data), "\n")
 ```
 
 ## Bootstrapping
-```{r}
+```{r bootstrapping}
 library(boot)
 # Define a function to compute the statistic of interest
 # For example, let's calculate the mean of the 'int.rate' variable
@@ -307,7 +307,7 @@ print(boot_result)
 ```
 
 ## Cross-validation
-```{r}
+```{r cross-validation}
 # Define control parameters for repeated k-fold cross-validation
 ctrl <- trainControl(method = "repeatedcv",  # Use repeated k-fold cross-validation
                      number = 10,            # Number of folds
@@ -326,7 +326,7 @@ print(model)
 ```
 
 ## Train other models
-```{r}
+```{r train models}
 # Train gradient boosting model
 set.seed(123)  # Set seed for reproducibility
 gbm_model <- train(not.fully.paid ~ .,         # Predict 'not.fully.paid' based on all other variables
@@ -350,7 +350,7 @@ print(nnet_model)
 ```
 
 ## Model performance 
-```{r}
+```{r model performance}
 # Define models
 models <- list(
   "Logistic Regression" = caret::train(not.fully.paid ~ ., data = loan_data, method = "glm", trControl = ctrl),
@@ -363,6 +363,39 @@ model_resamples <- resamples(models)
 
 # Summarize model performance
 summary(model_resamples)
+
+```
+
+## Saving Model
+```{r saving model}
+# Saving the best Gradient Boosting model
+saveRDS(gbm_model$finalModel, "./models/gbm_model.rds")
+
+# Load the saved model
+loaded_gbm_model <- readRDS("./models/gbm_model.rds")
+
+# Prepare new data for prediction
+new_data <- data.frame(
+  credit.policy = 1,
+  purpose = "debt_consolidation",
+  int.rate = 0.1189,
+  installment = 829.1,
+  log.annual.inc = 11.35040654,
+  dti = 19.48,
+  fico = 737,
+  days.with.cr.line = 5639.958333,
+  revol.bal = 28854,
+  revol.util = 52.1,
+  inq.last.6mths = 0,
+  delinq.2yrs = 0,
+  pub.rec = 0
+)
+
+# Use the loaded model to make predictions
+predictions_loaded_model <- predict(loaded_gbm_model, newdata = new_data)
+
+# Print predictions
+print(predictions_loaded_model)
 
 ```
 

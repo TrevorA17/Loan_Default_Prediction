@@ -28,6 +28,7 @@ Trevor Okinda
   - [Cross-validation](#cross-validation)
   - [Train other models](#train-other-models)
   - [Model performance](#model-performance)
+  - [Saving Model](#saving-model)
 
 # Student Details
 
@@ -362,7 +363,7 @@ for (var in num_vars) {
 }
 ```
 
-![](loan_default_application_files/figure-gfm/unnamed-chunk-7-1.png)<!-- -->![](loan_default_application_files/figure-gfm/unnamed-chunk-7-2.png)<!-- -->![](loan_default_application_files/figure-gfm/unnamed-chunk-7-3.png)<!-- -->![](loan_default_application_files/figure-gfm/unnamed-chunk-7-4.png)<!-- -->![](loan_default_application_files/figure-gfm/unnamed-chunk-7-5.png)<!-- -->![](loan_default_application_files/figure-gfm/unnamed-chunk-7-6.png)<!-- -->![](loan_default_application_files/figure-gfm/unnamed-chunk-7-7.png)<!-- -->![](loan_default_application_files/figure-gfm/unnamed-chunk-7-8.png)<!-- -->![](loan_default_application_files/figure-gfm/unnamed-chunk-7-9.png)<!-- -->![](loan_default_application_files/figure-gfm/unnamed-chunk-7-10.png)<!-- -->![](loan_default_application_files/figure-gfm/unnamed-chunk-7-11.png)<!-- -->
+![](loan_default_application_files/figure-gfm/plots-1.png)<!-- -->![](loan_default_application_files/figure-gfm/plots-2.png)<!-- -->![](loan_default_application_files/figure-gfm/plots-3.png)<!-- -->![](loan_default_application_files/figure-gfm/plots-4.png)<!-- -->![](loan_default_application_files/figure-gfm/plots-5.png)<!-- -->![](loan_default_application_files/figure-gfm/plots-6.png)<!-- -->![](loan_default_application_files/figure-gfm/plots-7.png)<!-- -->![](loan_default_application_files/figure-gfm/plots-8.png)<!-- -->![](loan_default_application_files/figure-gfm/plots-9.png)<!-- -->![](loan_default_application_files/figure-gfm/plots-10.png)<!-- -->![](loan_default_application_files/figure-gfm/plots-11.png)<!-- -->
 
 ``` r
 # Bar plots for categorical variables
@@ -378,7 +379,7 @@ for (var in cat_vars) {
 }
 ```
 
-![](loan_default_application_files/figure-gfm/unnamed-chunk-7-12.png)<!-- -->![](loan_default_application_files/figure-gfm/unnamed-chunk-7-13.png)<!-- -->![](loan_default_application_files/figure-gfm/unnamed-chunk-7-14.png)<!-- -->
+![](loan_default_application_files/figure-gfm/plots-12.png)<!-- -->![](loan_default_application_files/figure-gfm/plots-13.png)<!-- -->![](loan_default_application_files/figure-gfm/plots-14.png)<!-- -->
 
 ``` r
 # Multivariate Plots
@@ -419,277 +420,277 @@ print(scatter_plots)
 
     ## [[1]]
 
-![](loan_default_application_files/figure-gfm/unnamed-chunk-7-15.png)<!-- -->
+![](loan_default_application_files/figure-gfm/plots-15.png)<!-- -->
 
     ## 
     ## [[2]]
 
-![](loan_default_application_files/figure-gfm/unnamed-chunk-7-16.png)<!-- -->
+![](loan_default_application_files/figure-gfm/plots-16.png)<!-- -->
 
     ## 
     ## [[3]]
 
-![](loan_default_application_files/figure-gfm/unnamed-chunk-7-17.png)<!-- -->
+![](loan_default_application_files/figure-gfm/plots-17.png)<!-- -->
 
     ## 
     ## [[4]]
 
-![](loan_default_application_files/figure-gfm/unnamed-chunk-7-18.png)<!-- -->
+![](loan_default_application_files/figure-gfm/plots-18.png)<!-- -->
 
     ## 
     ## [[5]]
 
-![](loan_default_application_files/figure-gfm/unnamed-chunk-7-19.png)<!-- -->
+![](loan_default_application_files/figure-gfm/plots-19.png)<!-- -->
 
     ## 
     ## [[6]]
 
-![](loan_default_application_files/figure-gfm/unnamed-chunk-7-20.png)<!-- -->
+![](loan_default_application_files/figure-gfm/plots-20.png)<!-- -->
 
     ## 
     ## [[7]]
 
-![](loan_default_application_files/figure-gfm/unnamed-chunk-7-21.png)<!-- -->
+![](loan_default_application_files/figure-gfm/plots-21.png)<!-- -->
 
     ## 
     ## [[8]]
 
-![](loan_default_application_files/figure-gfm/unnamed-chunk-7-22.png)<!-- -->
+![](loan_default_application_files/figure-gfm/plots-22.png)<!-- -->
 
     ## 
     ## [[9]]
 
-![](loan_default_application_files/figure-gfm/unnamed-chunk-7-23.png)<!-- -->
+![](loan_default_application_files/figure-gfm/plots-23.png)<!-- -->
 
     ## 
     ## [[10]]
 
-![](loan_default_application_files/figure-gfm/unnamed-chunk-7-24.png)<!-- -->
+![](loan_default_application_files/figure-gfm/plots-24.png)<!-- -->
 
     ## 
     ## [[11]]
 
-![](loan_default_application_files/figure-gfm/unnamed-chunk-7-25.png)<!-- -->
+![](loan_default_application_files/figure-gfm/plots-25.png)<!-- -->
 
     ## 
     ## [[12]]
 
-![](loan_default_application_files/figure-gfm/unnamed-chunk-7-26.png)<!-- -->
+![](loan_default_application_files/figure-gfm/plots-26.png)<!-- -->
 
     ## 
     ## [[13]]
 
-![](loan_default_application_files/figure-gfm/unnamed-chunk-7-27.png)<!-- -->
+![](loan_default_application_files/figure-gfm/plots-27.png)<!-- -->
 
     ## 
     ## [[14]]
 
-![](loan_default_application_files/figure-gfm/unnamed-chunk-7-28.png)<!-- -->
+![](loan_default_application_files/figure-gfm/plots-28.png)<!-- -->
 
     ## 
     ## [[15]]
 
-![](loan_default_application_files/figure-gfm/unnamed-chunk-7-29.png)<!-- -->
+![](loan_default_application_files/figure-gfm/plots-29.png)<!-- -->
 
     ## 
     ## [[16]]
 
-![](loan_default_application_files/figure-gfm/unnamed-chunk-7-30.png)<!-- -->
+![](loan_default_application_files/figure-gfm/plots-30.png)<!-- -->
 
     ## 
     ## [[17]]
 
-![](loan_default_application_files/figure-gfm/unnamed-chunk-7-31.png)<!-- -->
+![](loan_default_application_files/figure-gfm/plots-31.png)<!-- -->
 
     ## 
     ## [[18]]
 
-![](loan_default_application_files/figure-gfm/unnamed-chunk-7-32.png)<!-- -->
+![](loan_default_application_files/figure-gfm/plots-32.png)<!-- -->
 
     ## 
     ## [[19]]
 
-![](loan_default_application_files/figure-gfm/unnamed-chunk-7-33.png)<!-- -->
+![](loan_default_application_files/figure-gfm/plots-33.png)<!-- -->
 
     ## 
     ## [[20]]
 
-![](loan_default_application_files/figure-gfm/unnamed-chunk-7-34.png)<!-- -->
+![](loan_default_application_files/figure-gfm/plots-34.png)<!-- -->
 
     ## 
     ## [[21]]
 
-![](loan_default_application_files/figure-gfm/unnamed-chunk-7-35.png)<!-- -->
+![](loan_default_application_files/figure-gfm/plots-35.png)<!-- -->
 
     ## 
     ## [[22]]
 
-![](loan_default_application_files/figure-gfm/unnamed-chunk-7-36.png)<!-- -->
+![](loan_default_application_files/figure-gfm/plots-36.png)<!-- -->
 
     ## 
     ## [[23]]
 
-![](loan_default_application_files/figure-gfm/unnamed-chunk-7-37.png)<!-- -->
+![](loan_default_application_files/figure-gfm/plots-37.png)<!-- -->
 
     ## 
     ## [[24]]
 
-![](loan_default_application_files/figure-gfm/unnamed-chunk-7-38.png)<!-- -->
+![](loan_default_application_files/figure-gfm/plots-38.png)<!-- -->
 
     ## 
     ## [[25]]
 
-![](loan_default_application_files/figure-gfm/unnamed-chunk-7-39.png)<!-- -->
+![](loan_default_application_files/figure-gfm/plots-39.png)<!-- -->
 
     ## 
     ## [[26]]
 
-![](loan_default_application_files/figure-gfm/unnamed-chunk-7-40.png)<!-- -->
+![](loan_default_application_files/figure-gfm/plots-40.png)<!-- -->
 
     ## 
     ## [[27]]
 
-![](loan_default_application_files/figure-gfm/unnamed-chunk-7-41.png)<!-- -->
+![](loan_default_application_files/figure-gfm/plots-41.png)<!-- -->
 
     ## 
     ## [[28]]
 
-![](loan_default_application_files/figure-gfm/unnamed-chunk-7-42.png)<!-- -->
+![](loan_default_application_files/figure-gfm/plots-42.png)<!-- -->
 
     ## 
     ## [[29]]
 
-![](loan_default_application_files/figure-gfm/unnamed-chunk-7-43.png)<!-- -->
+![](loan_default_application_files/figure-gfm/plots-43.png)<!-- -->
 
     ## 
     ## [[30]]
 
-![](loan_default_application_files/figure-gfm/unnamed-chunk-7-44.png)<!-- -->
+![](loan_default_application_files/figure-gfm/plots-44.png)<!-- -->
 
     ## 
     ## [[31]]
 
-![](loan_default_application_files/figure-gfm/unnamed-chunk-7-45.png)<!-- -->
+![](loan_default_application_files/figure-gfm/plots-45.png)<!-- -->
 
     ## 
     ## [[32]]
 
-![](loan_default_application_files/figure-gfm/unnamed-chunk-7-46.png)<!-- -->
+![](loan_default_application_files/figure-gfm/plots-46.png)<!-- -->
 
     ## 
     ## [[33]]
 
-![](loan_default_application_files/figure-gfm/unnamed-chunk-7-47.png)<!-- -->
+![](loan_default_application_files/figure-gfm/plots-47.png)<!-- -->
 
     ## 
     ## [[34]]
 
-![](loan_default_application_files/figure-gfm/unnamed-chunk-7-48.png)<!-- -->
+![](loan_default_application_files/figure-gfm/plots-48.png)<!-- -->
 
     ## 
     ## [[35]]
 
-![](loan_default_application_files/figure-gfm/unnamed-chunk-7-49.png)<!-- -->
+![](loan_default_application_files/figure-gfm/plots-49.png)<!-- -->
 
     ## 
     ## [[36]]
 
-![](loan_default_application_files/figure-gfm/unnamed-chunk-7-50.png)<!-- -->
+![](loan_default_application_files/figure-gfm/plots-50.png)<!-- -->
 
     ## 
     ## [[37]]
 
-![](loan_default_application_files/figure-gfm/unnamed-chunk-7-51.png)<!-- -->
+![](loan_default_application_files/figure-gfm/plots-51.png)<!-- -->
 
     ## 
     ## [[38]]
 
-![](loan_default_application_files/figure-gfm/unnamed-chunk-7-52.png)<!-- -->
+![](loan_default_application_files/figure-gfm/plots-52.png)<!-- -->
 
     ## 
     ## [[39]]
 
-![](loan_default_application_files/figure-gfm/unnamed-chunk-7-53.png)<!-- -->
+![](loan_default_application_files/figure-gfm/plots-53.png)<!-- -->
 
     ## 
     ## [[40]]
 
-![](loan_default_application_files/figure-gfm/unnamed-chunk-7-54.png)<!-- -->
+![](loan_default_application_files/figure-gfm/plots-54.png)<!-- -->
 
     ## 
     ## [[41]]
 
-![](loan_default_application_files/figure-gfm/unnamed-chunk-7-55.png)<!-- -->
+![](loan_default_application_files/figure-gfm/plots-55.png)<!-- -->
 
     ## 
     ## [[42]]
 
-![](loan_default_application_files/figure-gfm/unnamed-chunk-7-56.png)<!-- -->
+![](loan_default_application_files/figure-gfm/plots-56.png)<!-- -->
 
     ## 
     ## [[43]]
 
-![](loan_default_application_files/figure-gfm/unnamed-chunk-7-57.png)<!-- -->
+![](loan_default_application_files/figure-gfm/plots-57.png)<!-- -->
 
     ## 
     ## [[44]]
 
-![](loan_default_application_files/figure-gfm/unnamed-chunk-7-58.png)<!-- -->
+![](loan_default_application_files/figure-gfm/plots-58.png)<!-- -->
 
     ## 
     ## [[45]]
 
-![](loan_default_application_files/figure-gfm/unnamed-chunk-7-59.png)<!-- -->
+![](loan_default_application_files/figure-gfm/plots-59.png)<!-- -->
 
     ## 
     ## [[46]]
 
-![](loan_default_application_files/figure-gfm/unnamed-chunk-7-60.png)<!-- -->
+![](loan_default_application_files/figure-gfm/plots-60.png)<!-- -->
 
     ## 
     ## [[47]]
 
-![](loan_default_application_files/figure-gfm/unnamed-chunk-7-61.png)<!-- -->
+![](loan_default_application_files/figure-gfm/plots-61.png)<!-- -->
 
     ## 
     ## [[48]]
 
-![](loan_default_application_files/figure-gfm/unnamed-chunk-7-62.png)<!-- -->
+![](loan_default_application_files/figure-gfm/plots-62.png)<!-- -->
 
     ## 
     ## [[49]]
 
-![](loan_default_application_files/figure-gfm/unnamed-chunk-7-63.png)<!-- -->
+![](loan_default_application_files/figure-gfm/plots-63.png)<!-- -->
 
     ## 
     ## [[50]]
 
-![](loan_default_application_files/figure-gfm/unnamed-chunk-7-64.png)<!-- -->
+![](loan_default_application_files/figure-gfm/plots-64.png)<!-- -->
 
     ## 
     ## [[51]]
 
-![](loan_default_application_files/figure-gfm/unnamed-chunk-7-65.png)<!-- -->
+![](loan_default_application_files/figure-gfm/plots-65.png)<!-- -->
 
     ## 
     ## [[52]]
 
-![](loan_default_application_files/figure-gfm/unnamed-chunk-7-66.png)<!-- -->
+![](loan_default_application_files/figure-gfm/plots-66.png)<!-- -->
 
     ## 
     ## [[53]]
 
-![](loan_default_application_files/figure-gfm/unnamed-chunk-7-67.png)<!-- -->
+![](loan_default_application_files/figure-gfm/plots-67.png)<!-- -->
 
     ## 
     ## [[54]]
 
-![](loan_default_application_files/figure-gfm/unnamed-chunk-7-68.png)<!-- -->
+![](loan_default_application_files/figure-gfm/plots-68.png)<!-- -->
 
     ## 
     ## [[55]]
 
-![](loan_default_application_files/figure-gfm/unnamed-chunk-7-69.png)<!-- -->
+![](loan_default_application_files/figure-gfm/plots-69.png)<!-- -->
 
 ``` r
 print(cat_plots)
@@ -697,17 +698,17 @@ print(cat_plots)
 
     ## [[1]]
 
-![](loan_default_application_files/figure-gfm/unnamed-chunk-7-70.png)<!-- -->
+![](loan_default_application_files/figure-gfm/plots-70.png)<!-- -->
 
     ## 
     ## [[2]]
 
-![](loan_default_application_files/figure-gfm/unnamed-chunk-7-71.png)<!-- -->
+![](loan_default_application_files/figure-gfm/plots-71.png)<!-- -->
 
     ## 
     ## [[3]]
 
-![](loan_default_application_files/figure-gfm/unnamed-chunk-7-72.png)<!-- -->
+![](loan_default_application_files/figure-gfm/plots-72.png)<!-- -->
 
 # Preprocessing and Data Transformation
 
@@ -7699,3 +7700,42 @@ summary(model_resamples)
     ## Logistic Regression 0.07262294    0
     ## Gradient Boosting   0.01093342    0
     ## Neural Network      0.01093557    0
+
+## Saving Model
+
+``` r
+# Saving the best Gradient Boosting model
+saveRDS(gbm_model$finalModel, "./models/gbm_model.rds")
+
+# Load the saved model
+loaded_gbm_model <- readRDS("./models/gbm_model.rds")
+
+# Prepare new data for prediction
+new_data <- data.frame(
+  credit.policy = 1,
+  purpose = "debt_consolidation",
+  int.rate = 0.1189,
+  installment = 829.1,
+  log.annual.inc = 11.35040654,
+  dti = 19.48,
+  fico = 737,
+  days.with.cr.line = 5639.958333,
+  revol.bal = 28854,
+  revol.util = 52.1,
+  inq.last.6mths = 0,
+  delinq.2yrs = 0,
+  pub.rec = 0
+)
+
+# Use the loaded model to make predictions
+predictions_loaded_model <- predict(loaded_gbm_model, newdata = new_data)
+```
+
+    ## Using 50 trees...
+
+``` r
+# Print predictions
+print(predictions_loaded_model)
+```
+
+    ## [1] 0.5681784
